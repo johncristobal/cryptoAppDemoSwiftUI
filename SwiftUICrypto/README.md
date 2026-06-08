@@ -12,11 +12,29 @@ Preview
 ahora podemos colocar info dentro del preview
 - con este podemos hcaer que el preview solo este en la vista, no tooooda la pantalla
 
+Model
+- ojo, no pongas nomvre de 'Model', solo Coin para prod
+- crea modelos desde json usando AI Xcode
+- crea variables en tiempo real, accede al valor al momento
+    var rank: Int {
+        return Int(marketCapRank ?? 0)
+    }
+
+Protocols:
+* Identifable - incluye un id obligatorio para identifcar en vista
+* Codable - cuidado con los nombres, el underscore se busca match con enum
+    enum CodingKeys: String, CodingKey {
+        case id
+        case symbol
+        case name
+        case image
+        case currentPrice = "current_price"
+
+
 ============================
 
 - API crytp page
 jimenezalexis060@...
 https://www.coingecko.com/en/developers/dashboard
-https://api.coingecko.com/api/v3/simple/price?vs_currencies=usd&ids=bitcoin&x_cg_demo_api_key=CG-SaZfNd1rg6CoXqYm4VSaDtCt
-CG-SaZfNd1rg6CoXqYm4VSaDtCt
+
 
