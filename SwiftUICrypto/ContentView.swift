@@ -21,7 +21,7 @@ struct ContentView: View {
                 Text("Red color")
                     .foregroundColor(Color.theme.red)
                 Text("Green color")
-                    .foregroundColor(Color.theme.green)
+                    .foregroundColor(Color.theme.greenTheme)
             }
             .font(.headline)
         }

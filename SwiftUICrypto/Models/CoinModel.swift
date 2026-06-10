@@ -120,3 +120,39 @@ struct CoinModel: Codable, Identifiable {
         )
     }
 }
+
+extension CoinModel {
+    public static let ethereumCoin = CoinModel(
+       id: "ethereum",
+       symbol: "eth",
+       name: "Ethereum",
+       image: "https://coin-images.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
+       currentPrice: 1696.22,
+       marketCap: 204707750079,
+       marketCapRank: 2,
+       fullyDilutedValuation: 204707750079,
+       totalVolume: 18055439802,
+       high24h: 1712.73,
+       low24h: 1632.55,
+       priceChange24h: 63.67,
+       priceChangePercentage24h: 3.90004,
+       marketCapChange24h: 7637994550,
+       marketCapChangePercentage24h: 3.87578,
+       circulatingSupply: 120684490.995401,
+       totalSupply: 120684490.995401,
+       maxSupply: nil,
+       ath: 4946.05,
+       athChangePercentage: -65.7055,
+       athDate: "2025-08-24T19:21:03.333Z",
+       atl: 0.432979,
+       atlChangePercentage: 391656.45106,
+       atlDate: "2015-10-20T00:00:00.000Z",
+       roi: CoinModel.ROI(
+        times: 34.72243700539618,
+        currency: "btc",
+        percentage: 3472.243700539618
+       ),
+       lastUpdated: "2026-06-08T22:09:23.387Z",
+       priceChangePercentage24hInCurrency: 3.9000381250323577,
+       currentHoldings: 2.0)
+}

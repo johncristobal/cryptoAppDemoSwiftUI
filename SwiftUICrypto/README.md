@@ -30,7 +30,25 @@ Protocols:
         case image
         case currentPrice = "current_price"
 
+============================
+### Views tips
+1. 
+Preview("Light", traits: .sizeThatFitsLayout) {
+    View
+        .preferredColorScheme(.light)
+}
 
+Preview("Dark", traits: .sizeThatFitsLayout) {
+    View
+        .preferredColorScheme(.dark)
+}
+
+- Buyenisimo para agregar dos previews, agrega tabs y se ven con lo que digamos
+    - shcem, device, size, etc
+
+2. extension de view para mejhor lectura
+Ver codigo, como agrega el leftColumn, centerCOllumn, etc en extensiones
+    
 ============================
 
 - API crytp page
