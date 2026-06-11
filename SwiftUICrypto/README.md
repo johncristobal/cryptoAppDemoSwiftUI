@@ -50,6 +50,26 @@ Preview("Dark", traits: .sizeThatFitsLayout) {
 Ver codigo, como agrega el leftColumn, centerCOllumn, etc en extensiones
     
 ============================
+### View model
+    }
+    .environmentObject(vm)
+    
+pasas el viewmodel en el environment, 
+
+    struct HomeView: View {
+        @EnvironmentObject private var vm: HomeViewModel
+            
+Donde quieras, lo puedes obtener y jalar la data
+
+### transition
+    if !showPortafolio {
+        allCoinsList
+            .transition(.move(edge: .leading))
+    }
+mira como al agregar transition, y la vista desaparece, hace animacion que se vaya a un lado, *INTERESANTE*
+
+
+============================
 
 - API crytp page
 jimenezalexis060@...

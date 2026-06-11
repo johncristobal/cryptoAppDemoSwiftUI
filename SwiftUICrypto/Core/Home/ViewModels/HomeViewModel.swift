@@ -14,10 +14,18 @@ class HomeViewModel: ObservableObject {
     @Published var allCoins: [CoinModel] = []
     @Published var portafolioCoins: [CoinModel] = []
 
+    private let dataService = CoinDataService()
+    private var cancellables = Set<AnyCancellable>()
+    
     init() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-            self.allCoins.append(.ethereumCoin)
-            self.portafolioCoins.append(.ethereumCoin)
-        }
+        addsubscribers()
+    }
+    
+    func addsubscribers() {
+        dataService.$allCoins
+            .sink { [weak self] coins in
+                self?.allCoins = coins
+            }
+            .store(in: &cancellables)
     }
 }
