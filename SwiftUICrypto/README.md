@@ -69,6 +69,33 @@ Donde quieras, lo puedes obtener y jalar la data
 mira como al agregar transition, y la vista desaparece, hace animacion que se vaya a un lado, *INTERESANTE*
 
 
+### API
+    URLSession.shared.dataTaskPublisher
+        .subscribe(on: DispatchQueue.global(qos: .default))
+        .tryMap { (output) -> Data in
+- Mira nada mas, una nueva foram de llamar url session, pero con combine
+- suscribe a background
+- trymap para obtenr error
+
+        .receive(on: DispatchQueue.main)
+        .decode(type: [CoinModel].self, decoder: JSONDecoder())
+        .sink { (completion) in ... receiveValue: { [weak self] value in
+
+- recibe en main
+- decode modelo lista
+- sink para terminar operacion
+    - completion con error en caso de
+    - receiveValue para obtener data
+    
+*INTERESANTE*
+    @Published var allCoins: [CoinModel] = []
+    . . .
+    dataService.$allCoins
+        .sink { [weak self] coins in  
+
+- @Published, son parte decombine, y se pueden suscribir como tal y obtener data
+- NetwirkinManager
+    - separamops el publisher en diferentes metodos, para mejor lectura 
 ============================
 
 - API crytp page
