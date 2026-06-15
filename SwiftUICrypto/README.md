@@ -98,6 +98,32 @@ mira como al agregar transition, y la vista desaparece, hace animacion que se va
     - separamops el publisher en diferentes metodos, para mejor lectura 
 ============================
 
+### View model Image
+inits en views
+- para inicializar viewmodels con un dato, wrappedValue
+    @StateObject var vm: CoinImageViewModel
+    
+    init (coin: CoinModel) {
+        _vm = StateObject(wrappedValue: CoinImageViewModel(coin: coin))
+    }
+
+subscriber de la image
+- en el trymap, buscamos que el data sea imagen, es lo que recibimos en sink
+    imageSubscription = NetworkingManager.download(url: url)
+        .tryMap({ data -> UIImage? in
+            return UIImage(data: data)
+        })
+
+una vez mas, conectamos a published
+dentro de view model, subscribimos al imagen de service
+    self.dataService.$image
+        .sink { [weak self] (_) in
+
+mostramos view, llamamos vista con coin, y listo
+    CoinImageView(coin: coin)
+
+
+============================
 - API crytp page
 jimenezalexis060@...
 https://www.coingecko.com/en/developers/dashboard
