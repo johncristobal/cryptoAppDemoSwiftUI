@@ -97,7 +97,6 @@ mira como al agregar transition, y la vista desaparece, hace animacion que se va
 - NetwirkinManager
     - separamops el publisher en diferentes metodos, para mejor lectura 
 ============================
-
 ### View model Image
 inits en views
 - para inicializar viewmodels con un dato, wrappedValue
@@ -122,6 +121,13 @@ dentro de view model, subscribimos al imagen de service
 mostramos view, llamamos vista con coin, y listo
     CoinImageView(coin: coin)
 
+============================
+### SAVE images local manger file
+Recuerda, cuando son imagnes, podemos cargar, guardar y cargar de local
+FileManager para obtrenr carpetas y archivos
+    FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).firss
+Para crear directorios
+    FileManager.default.createDirectory
 
 ============================
 - API crytp page
