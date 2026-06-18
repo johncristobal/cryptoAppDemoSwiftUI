@@ -139,6 +139,16 @@ Recuerda
 - para cerrar teclado
     sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
 
+- OJO con los preview y multiples
+
+- search and combine
+    // combinamos publishers, cuando cambien uno, se ejecuta
+    // deboucce para esperar 0.5, tecleeos rapidos
+    // usamos funcion para limpireza de codigo
+    $searchText
+        .combineLatest(dataService.$allCoins)
+        .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+        .map(filterCoins)
 
 
 ============================
