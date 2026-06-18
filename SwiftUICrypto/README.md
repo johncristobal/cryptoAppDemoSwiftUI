@@ -130,6 +130,19 @@ Para crear directorios
     FileManager.default.createDirectory
 
 ============================
+### Search
+Recuerda
+    .overlay(
+        Image(systemName: "xmark.circle.fill")
+- para colocar items encima de un view
+
+- para cerrar teclado
+    sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+
+
+
+============================
+
 - API crytp page
 jimenezalexis060@...
 https://www.coingecko.com/en/developers/dashboard
