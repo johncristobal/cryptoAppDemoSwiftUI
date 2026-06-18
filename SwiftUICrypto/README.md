@@ -150,6 +150,10 @@ Recuerda
         .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
         .map(filterCoins)
 
+OJO Enviroment
+- recuerda que puedes acceder al environment data que se haya inyectado desde el inicio (ver archivo main)
+    struct HomeStatsView: View {
+        @EnvironmentObject private var vm: HomeViewModel
 
 ============================
 

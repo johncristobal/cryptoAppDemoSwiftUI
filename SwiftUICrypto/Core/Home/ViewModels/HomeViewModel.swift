@@ -11,6 +11,12 @@ import Combine
 
 class HomeViewModel: ObservableObject {
     
+    @Published var statistics: [StatisticsModel] = [
+        StatisticsModel(title: "Market cap", value: "$12.58", percentage: 25.34),
+        StatisticsModel(title: "Market cap", value: "$12.58", percentage: 25.34),
+        StatisticsModel(title: "Market cap", value: "$12.58", percentage: 25.34)
+    ]
+    
     @Published var allCoins: [CoinModel] = []
     @Published var portafolioCoins: [CoinModel] = []
 
@@ -24,11 +30,11 @@ class HomeViewModel: ObservableObject {
     }
     
     func addsubscribers() {
-//        dataService.$allCoins
-//            .sink { [weak self] coins in
-//                self?.allCoins = coins
-//            }
-//            .store(in: &cancellables)
+        dataService.$allCoins
+            .sink { [weak self] coins in
+                self?.allCoins = coins
+            }
+            .store(in: &cancellables)
 
         // combinamos publishers, cuando cambien uno, se ejecuta
         $searchText
