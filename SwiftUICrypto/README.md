@@ -156,6 +156,22 @@ OJO Enviroment
         @EnvironmentObject private var vm: HomeViewModel
 
 ============================
+Portafolio
+- Mostrar sheets con isPresented
+    .sheet(isPresented: $showPortafolioView) {
+        PortafolioView()
+            .environmentObject(vm)
+    }
+
+- cambiar tema titels desde main view
+    init() {
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(Color.theme.accent)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.accent)]
+    }
+    
+
+
+============================
 
 - API crytp page
 jimenezalexis060@...
