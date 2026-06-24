@@ -17,6 +17,7 @@ class HomeViewModel: ObservableObject {
     @Published var portafolioCoins: [CoinModel] = []
 
     @Published var searchText : String = ""
+    @Published var isLoading = false
     
     private let coinDataService = CoinDataService()
     private let marketataService = MarketDataService()
@@ -44,33 +45,37 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
-        marketataService.$marketData
-            .map(appendMarketData)
-            .sink { [weak self] stats in
-                self?.statistics = stats
-            }
-            .store(in: &cancellables)
-        
         // updates database
         $allCoins
             .combineLatest(portafolioService.$portafolio)
-            .map { (coins, portafolio) -> [CoinModel] in
-                coins
-                    .compactMap { coin -> CoinModel? in
-                        guard let entityName = portafolio.first(where: { $0.coinID == coin.id }) else {
-                            return nil
-                        }
-                        return coin.updateHoldings(amount: entityName.amout)
-                    }
-            }
+            .map(mapAllCoinsToPortafolio)
             .sink { [weak self] coins in
                 self?.portafolioCoins = coins
             }
             .store(in: &cancellables)
+        
+        // ipdate market data
+        marketataService.$marketData
+            .combineLatest($portafolioCoins)
+            .map(appendMarketData)
+            .sink { [weak self] stats in
+                self?.statistics = stats
+                self?.isLoading = false
+            }
+            .store(in: &cancellables)
+
     }
     
     func updatePortafolio(coin: CoinModel, amount: Double) {
         portafolioService.updatePortafolio(coin: coin, amount: amount)
+    }
+    
+    func reloadData() {
+        isLoading = true
+
+        coinDataService.getCoins()
+        marketataService.getData()
+        HapticManager.play(type: .success)
     }
     
     private func filterCoins(text: String, coins: [CoinModel]) -> [CoinModel] {
@@ -86,14 +91,40 @@ class HomeViewModel: ObservableObject {
         return filter
     }
     
-    private func appendMarketData(model: MarketDataModel?) -> [StatisticsModel] {
+    private func mapAllCoinsToPortafolio(coins: [CoinModel], portafolio: [PortafolioEntity]) -> [CoinModel] {
+        coins
+            .compactMap { coin -> CoinModel? in
+                guard let entityName = portafolio.first(where: { $0.coinID == coin.id }) else {
+                    return nil
+                }
+                return coin.updateHoldings(amount: entityName.amout)
+            }
+    }
+    
+    private func appendMarketData(model: MarketDataModel?, portafoliocoins: [CoinModel]) -> [StatisticsModel] {
         var stats: [StatisticsModel] = []
         guard let data = model else { return stats }
         
         let marketCap = StatisticsModel(title: "Market cap", value: data.marketCap, percentage: data.marketCapChangePercentage24hUsd)
         let volume = StatisticsModel(title: "24 Volume", value: data.volume)
         let btcDominance = StatisticsModel(title: "BTC Dominance", value: data.btcDominance)
-        let portafolio = StatisticsModel(title: "Portafolio volumne", value: "$0.00", percentage: 0)
+        
+        let portafolioValue = portafoliocoins
+            .map( {$0.currentHoldingsValue } )
+            .reduce(0, +)
+        
+        let previousValue = portafoliocoins
+            .map { coin -> Double in
+                let current = coin.currentHoldingsValue
+                let change = coin.priceChangePercentage24h / 100.0
+                
+                let previous = current / (1 + change)
+                return previous
+            }
+            .reduce(0, +)
+        let percentageChange = ((portafolioValue - previousValue) / previousValue) * 100
+        
+        let portafolio = StatisticsModel(title: "Portafolio volumne", value: portafolioValue.asCurrencyWith2Decimals(), percentage: percentageChange)
         
         stats.append(contentsOf: [
             marketCap,
