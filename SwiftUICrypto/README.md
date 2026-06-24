@@ -184,6 +184,38 @@ Database core data
         .combineLatest(portafolioService.$portafolio)
         .map { (coins, portafolio) -> [CoinModel] in
 
+- map con funcion 
+S puede enviuar la funcion sin params, ya todo esta en el metodo
+  marketataService.$marketData
+            .combineLatest($portafolioCoins)
+            .map(appendMarketData)
+        
+============================
+sort
+- dos formas de usar las funciones
+    return coins.sorted { coin1, coin2 -> Bool in
+        return coin1.rank < coin2.rank
+    }
+o
+    return coins.sorted(by: {$0.rank < $1.rank })
+    
+- animaciones with y de un published
+- checa el rotationEffect y el withAnimation para *girar* elemento 
+    HStack {
+        Text("Coin")
+        Image(systemName: "chevron.down")
+            .opacity((vm.sortOption == .rank || vm.sortOption == .rankReversed) ? 1 : 0)
+            .rotationEffect(Angle(degrees: vm.sortOption == .rank ? 0 : 180))
+    }
+    .onTapGesture {
+        withAnimation(.default) {
+            vm.sortOption = vm.sortOption == .rank ? .rankReversed : .rank
+        }
+    }
+
+============================
+Navigation
+
 ============================
 
 - API crytp page
