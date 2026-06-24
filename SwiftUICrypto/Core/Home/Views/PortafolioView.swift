@@ -35,6 +35,11 @@ struct PortafolioView: View {
                         tralingButton
                     }
                 })
+                .onChange(of: vm.searchText) { value in
+                    if value == "" {
+                        removeSeleccted()
+                    }
+                }
             }
         }
     }
@@ -50,13 +55,16 @@ extension PortafolioView {
     private var coinLogoList: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             LazyHStack(spacing: 10) {
-                ForEach(vm.allCoins) { coin in
+                ForEach(vm.searchText.isEmpty
+                        ? vm.portafolioCoins
+                        : vm.allCoins
+                ) { coin in
                     CoinLogoView(coin: coin)
                         .frame(width: 75)
                         .padding(4)
                         .onTapGesture(perform: {
                             withAnimation(.easeIn) {
-                                selectedCoin = coin
+                                updateSelectedView(coin: coin)
                             }
                         })
                         .background(
@@ -72,6 +80,18 @@ extension PortafolioView {
             }
             .frame(height: 120)
             .padding(4)
+        }
+    }
+    
+    private func updateSelectedView(coin: CoinModel) {
+        selectedCoin = coin
+        
+        if let portafolio = vm.portafolioCoins.first(where: { $0.id == coin.id }) {
+            if let amount = portafolio.currentHoldings {
+                quantityText = amount.description
+            }
+        } else {
+            quantityText = ""
         }
     }
     
@@ -121,8 +141,10 @@ extension PortafolioView {
     
     private func saveButton() {
         guard let coin = selectedCoin else { return }
+        guard let amount = Double(quantityText) else { return }
         
         // save
+        vm.updatePortafolio(coin: coin, amount: amount)
         
         // show checkmark
         withAnimation(.easeIn) {

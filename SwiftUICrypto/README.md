@@ -169,7 +169,20 @@ Portafolio
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(Color.theme.accent)]
     }
     
+============================
+Database core data
+- para guardr en base de datos
+    let container: NSPersistentContainer
 
+- datamodel
+    - Portafoliocontainer para crear entity y atributos
+    - let request = NSFetchRequest<PortafolioEntity>(entityName: entityName) para hacer busqueda
+    - container.viewContext. save, delete para actualizr db
+
+- combinelatest, para obtener coinmodel con el id de la base de datos
+    $allCoins
+        .combineLatest(portafolioService.$portafolio)
+        .map { (coins, portafolio) -> [CoinModel] in
 
 ============================
 
