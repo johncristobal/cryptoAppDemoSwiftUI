@@ -19,7 +19,7 @@ struct SwiftUICryptoApp: App {
     
     var body: some Scene {
         WindowGroup {
-            NavigationView {
+            NavigationStack {
                 HomeView()
                     .navigationBarHidden(true)
             }

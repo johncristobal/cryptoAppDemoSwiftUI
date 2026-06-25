@@ -215,7 +215,16 @@ o
 
 ============================
 Navigation
-
+- set full item clickable
+    .contentShape(Rectangle())
+    
+- navigationDestination
+Agregamos navigationdestination para navegar, solo un item
+OJO con NivagtionStack en main
+    .navigationDestination(isPresented: $showDetail) {
+        if let coin = selectedCoin {
+            DetailView(coin: coin)
+    
 ============================
 
 - API crytp page
