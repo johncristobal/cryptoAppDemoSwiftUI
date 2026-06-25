@@ -9,11 +9,12 @@ import SwiftUI
 
 struct DetailView: View {
     
+    @StateObject var vm: DetailViewModel
     let coin: CoinModel
     
     init(coin: CoinModel) {
         self.coin = coin
-        print("coin \(coin.name)")
+        self._vm = StateObject(wrappedValue: DetailViewModel(coin: coin))
     }
     
     var body: some View {
