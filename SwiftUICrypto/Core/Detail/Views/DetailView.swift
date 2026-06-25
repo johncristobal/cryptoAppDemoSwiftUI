@@ -10,18 +10,79 @@ import SwiftUI
 struct DetailView: View {
     
     @StateObject var vm: DetailViewModel
-    let coin: CoinModel
+    private let columns: [GridItem] = [
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
+    private var spacing: CGFloat = 30
     
     init(coin: CoinModel) {
-        self.coin = coin
         self._vm = StateObject(wrappedValue: DetailViewModel(coin: coin))
     }
     
     var body: some View {
-        Text(coin.name)
+        ScrollView {
+            VStack(spacing: 20) {
+                Text("")
+                    .frame(height: 150)
+                
+                overviewTitle
+                Divider()
+                overviewGrid
+                
+                additionalTitle
+                Divider()
+                additionalGrid                
+            }
+            .padding()
+        }
+        .navigationTitle(vm.coin.name)
     }
 }
 
 #Preview {
     DetailView(coin: .ethereumCoin)
+}
+
+extension DetailView {
+    
+    private var overviewTitle: some View {
+        Text("Overview")
+            .font(.title)
+            .bold()
+            .foregroundStyle(Color.theme.accent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var additionalTitle: some View {
+        Text("Details")
+            .font(.title)
+            .bold()
+            .foregroundStyle(Color.theme.accent)
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private var overviewGrid: some View {
+        LazyVGrid(
+            columns: columns,
+            alignment: .leading,
+            spacing: spacing,
+            pinnedViews: []) {
+                ForEach(vm.overviewS) { stat in
+                    StatisticsView(statistics: stat)
+                }
+            }
+    }
+    
+    private var additionalGrid: some View {
+        LazyVGrid(
+            columns: columns,
+            alignment: .leading,
+            spacing: spacing,
+            pinnedViews: []) {
+                ForEach(vm.additinoalS) { stat in
+                    StatisticsView(statistics: stat)
+                }
+            }
+    }
 }

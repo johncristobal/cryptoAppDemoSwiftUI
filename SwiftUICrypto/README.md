@@ -226,6 +226,18 @@ OJO con NivagtionStack en main
             DetailView(coin: coin)
     
 ============================
+Config
+- Agrewgamos archivo xcconfig para llave
+- agregamos llave en info plist para exponerla
+- la leemos
+    guard let token = Bundle.main.object(forInfoDictionaryKey: "API_TOKEN") as? String else {
+        print("No token given")
+        return nil
+    }
+    
+- OJO, agregamos xcconfig en info settings del poryecto
+
+============================
 
 - API crytp page
 jimenezalexis060@...
