@@ -258,8 +258,13 @@ Grafica
                     percentage = 1.0
                 }
             }
-        }
-    
+        }    
+
+============================
+Animations Tips
+- linelimit para mostrar todo o unas cuantas
+    Text(description)
+        .lineLimit(showDescription ? nil : 3)
 
 
 ============================

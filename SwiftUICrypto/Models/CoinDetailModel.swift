@@ -37,6 +37,10 @@ struct CoinDetail: Codable {
         case links
     }
     
+    var readableDescription: String {
+        return description.en?.removingHTMLOccurances ?? ""
+    }
+    
     struct DetailPlatform: Codable {
         let decimalPlace: Int?
         let contractAddress: String

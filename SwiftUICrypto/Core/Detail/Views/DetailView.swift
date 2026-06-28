@@ -10,6 +10,8 @@ import SwiftUI
 struct DetailView: View {
     
     @StateObject var vm: DetailViewModel
+    @State var showDescription = false
+    
     private let columns: [GridItem] = [
         GridItem(.flexible()),
         GridItem(.flexible())
@@ -29,11 +31,22 @@ struct DetailView: View {
                 VStack(spacing: 20) {
                     overviewTitle
                     Divider()
+                                        
+                    descriptionText
                     overviewGrid
-                    
                     additionalTitle
+                    
                     Divider()
                     additionalGrid
+                    
+                    VStack {
+                        if let website = vm.webSite, let url = URL(string: website) {
+                            Link("Wbesite", destination: url)
+                        }
+                    }
+                    .accentColor(Color.theme.accent)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.headline)
                 }
                 .padding()
             }
@@ -101,5 +114,30 @@ extension DetailView {
                     StatisticsView(statistics: stat)
                 }
             }
+    }
+    
+    private var descriptionText: some View {
+        ZStack {
+            if let description = vm.coinDes, !description.isEmpty {
+                VStack(alignment: .leading) {
+                    Text(description)
+                        .lineLimit(showDescription ? nil : 3)
+                        .font(.callout)
+                        .foregroundStyle(Color.theme.secondaryText)
+                    
+                    Button {
+                        withAnimation {
+                            showDescription.toggle()
+                        }
+                    } label: {
+                        Text(showDescription ? "Less" : "Read more...")
+                            .font(.caption)
+                            .padding(.vertical, 4)
+                    }
+                    .accentColor(Color.theme.accent)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        }
     }
 }
