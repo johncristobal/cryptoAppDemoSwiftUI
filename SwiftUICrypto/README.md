@@ -282,6 +282,11 @@ Swiftui Tips
     Section(header: Text("Swift")) {
         VStack(alignment: .leading) {
 
+- clear en table para quitar fondo
+    UITableView.appearance().backgroundColor = .clear
+    
+- ojo con los backgrond, agrega para que se use el del tema, no el default
+
 ============================
 
 - API crytp page
