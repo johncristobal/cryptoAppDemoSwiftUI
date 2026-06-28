@@ -238,6 +238,31 @@ Config
 - OJO, agregamos xcconfig en info settings del poryecto
 
 ============================
+Grafica
+- Por medio del geometry para obtener ancho y alto correcto
+- usamos path para ir puintaidop 
+
+    GeometryReader { geometry in
+        Path { path in
+            for index in data.indices {
+            . . .
+            if index == 0 {
+                path.move(to: .init(x: xPos, y: yPos))
+            }
+            path.addLine(to: CGPoint(x: xPos, y: yPos))
+            
+- Interesante uso de onappera para ir pintando la grafica
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                withAnimation(.linear(duration: 2.0)) {
+                    percentage = 1.0
+                }
+            }
+        }
+    
+
+
+============================
 
 - API crytp page
 jimenezalexis060@...
