@@ -268,6 +268,13 @@ Animations Tips
 
 
 ============================
+Swiftui Tips
+- section para mostrar secciones separadas en List
+- puedes agregar header y footer
+    Section(header: Text("Swift")) {
+        VStack(alignment: .leading) {
+
+============================
 
 - API crytp page
 jimenezalexis060@...
