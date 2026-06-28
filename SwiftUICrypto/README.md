@@ -266,7 +266,15 @@ Animations Tips
     Text(description)
         .lineLimit(showDescription ? nil : 3)
 
-
+- muy buena la animacion de launch
+- la mostramos a la par de main view, y al ir arracando esta misma, se va cargando la data                
+    ZStack {
+        if showLauncView {
+            LaunchView(showLauncView: $showLauncView)
+                .transition(.move(edge: .leading))
+        }
+    }
+    .zIndex(2.0)
 ============================
 Swiftui Tips
 - section para mostrar secciones separadas en List
